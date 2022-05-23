@@ -2,8 +2,26 @@
   <header>
     <div class="logo">BoolFlix</div>
     <div class="search">
-      <input type="text" placeholder="Cerca un film" v-model="cercaFilm" />
-      <button><i class="fas fa-search"></i></button>
+      <input
+        class="btn btn-dark"
+        type="text"
+        placeholder="Cerca un film"
+        v-model="cercaFilm"
+      />
+      <button @click="startSearch" class="btn btn-dark">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div
+      class="search-results"
+      v-for="(item, index) in searchMovies"
+      :key="index"
+    >
+      <div>{{ index + 1 }}</div>
+      <h2>{{ item.title }}</h2>
+      <h3>{{ item.original_title }}</h3>
+      <h4>{{ item.original_language }}</h4>
+      <h5>{{ item.vote_average }}</h5>
     </div>
   </header>
 </template>
@@ -11,6 +29,11 @@
 <script>
 export default {
   name: "AppHeader",
+  data() {
+    return {
+      cercaFilm: "",
+    };
+  },
 };
 </script>
 
@@ -28,7 +51,7 @@ header {
   }
 
   .search {
-    padding: 1rem;
+    padding: 2rem 1rem;
   }
 }
 </style>

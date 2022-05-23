@@ -4,8 +4,13 @@
     <header>
       <div class="logo">BoolFlix</div>
       <div class="search">
-        <input class="btn btn-dark" type="text" placeholder="Cerca un film" />
-        <button class="btn btn-dark">
+        <input
+          class="btn btn-dark"
+          type="text"
+          placeholder="Cerca un film"
+          v-model="cercaFilm"
+        />
+        <button @click="startSearch" class="btn btn-dark">
           <i class="fas fa-search"></i>
         </button>
       </div>
@@ -37,19 +42,22 @@ export default {
   data() {
     return {
       searchMovies: [],
+      cercaFilm: "",
     };
   },
-  created() {
-    axios
-      .get("https://api.themoviedb.org/3/search/movie", {
-        params: {
-          api_key: "c65d6e41ee9a7c6cdbdbaa81e45a6849",
-          query: "ritorno al futuro",
-        },
-      })
-      .then((resp) => {
-        this.searchMovies = resp.data.results;
-      });
+  methods: {
+    startSearch() {
+      axios
+        .get("https://api.themoviedb.org/3/search/movie", {
+          params: {
+            api_key: "c65d6e41ee9a7c6cdbdbaa81e45a6849",
+            query: this.cercaFilm,
+          },
+        })
+        .then((resp) => {
+          this.searchMovies = resp.data.results;
+        });
+    },
   },
 };
 </script>

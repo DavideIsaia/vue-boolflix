@@ -1,0 +1,23 @@
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #141414;
+  font-family: sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+i,
+input {
+  font-size: 1.2rem;
+  min-width: 3rem;
+  padding: 0.3rem;
+}

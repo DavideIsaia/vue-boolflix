@@ -5,6 +5,7 @@
       <div class="logo">BoolFlix</div>
       <div class="search">
         <input
+          v-on:keyup.enter="startSearch"
           class="btn btn-dark"
           type="text"
           placeholder="Cerca un film"
@@ -16,12 +17,14 @@
       </div>
     </header>
     <main>
-      <div class="my-card" v-for="(item, index) in searchMovies" :key="index">
-        <h6>{{ index + 1 }}° risultato</h6>
-        <h2>Titolo: {{ item.title }}</h2>
-        <h3>Titolo originale:{{ item.original_title }}</h3>
-        <h4>Lingua: {{ item.original_language }}</h4>
-        <h4>Voto: {{ item.vote_average }}/10</h4>
+      <div class="container">
+        <div class="card" v-for="(item, index) in searchMovies" :key="index">
+          <h6>{{ index + 1 }}° risultato</h6>
+          <h2>Titolo: {{ item.title }}</h2>
+          <h3>Titolo originale:{{ item.original_title }}</h3>
+          <h4>Lingua: {{ item.original_language }}</h4>
+          <h4>Voto: {{ item.vote_average }}/10</h4>
+        </div>
       </div>
     </main>
     <AppMain />
@@ -85,9 +88,10 @@ main {
   background-color: #141414;
   font-family: sans-serif;
   color: white;
-  .my-card {
+  .card {
     border: 2px solid red;
-    width: 700px;
+    margin-bottom: 1rem;
+    background-color: #141414;
   }
 }
 </style>

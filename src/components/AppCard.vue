@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-    <div class="card">
+    <div class="card rounded">
       <!-- se la locandina è presente la mostro -->
       <img
         v-if="movie.poster_path !== null"
@@ -47,18 +47,22 @@
           <span v-if="movie.vote_average == 0">Non Pervenuto</span>
           <!-- altrimenti si fa un ciclo v-for che aggiunge tante stelle quanto il numero arrotondato che esce dalla funzione starsVote -->
           <span v-else>
+            <!-- stelle piene -->
             <i
-              v-for="index in starsVote(movie.vote_average)"
+              v-for="(item, index) in starsVote(movie.vote_average)"
               :key="index"
               class="fas fa-star"
-            >
-            </i>
+            ></i>
+            <!-- stelle vuote -->
+            <i
+              v-for="(item, index) in starsTotal"
+              :key="index"
+              class="far fa-star"
+            ></i>
           </span>
         </h6>
         <!-- mostra la descrizione del film -->
-        <small>
-          {{ movie.overview }}
-        </small>
+        <small> Trama: {{ movie.overview }} </small>
       </div>
     </div>
   </div>
@@ -78,9 +82,13 @@ export default {
     movie: Object,
   },
   methods: {
-    // prende il voto espresso da 1 a 10 e lo divide per 2 e poi arrotonda al numero più vicino
+    // prende il voto espresso da 1 a 10 e lo divide per 2 e poi arrotonda per eccesso
     starsVote(vote) {
-      return Math.round(vote / 2);
+      return Math.ceil(vote / 2);
+    },
+    // sottrae da 5 il numero di stelle gialle e mostra le rimanenti
+    starsTotal() {
+      return 5 - this.starsVote();
     },
   },
 };
@@ -99,9 +107,9 @@ export default {
   }
 
   .fa-star {
-    color: gold;
     display: inline;
     margin-left: 0.1rem;
+    color: gold;
   }
 
   .card-body {

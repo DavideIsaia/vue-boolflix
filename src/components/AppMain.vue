@@ -1,9 +1,12 @@
 <template>
   <main>
     <div class="container d-flex flex-wrap pt-4 justify-content-center">
+      <h1 v-if="moviesArray == '' && seriesArray == ''" class="row">
+        BENVENUTO! INIZIA LA RICERCA
+      </h1>
       <div class="row">
         <!-- non mostra il nome della categoria se non si ottengono risultati dalla ricerca -->
-        <h2 v-if="moviesArray != ''" class="pb-3">Film</h2>
+        <h2 v-if="moviesArray != ''" class="text-uppercase pb-3">Film</h2>
         <AppCard
           v-for="(movie, index) in moviesArray"
           :key="index"
@@ -12,7 +15,9 @@
       </div>
       <div class="row">
         <!-- non mostra il nome della categoria se non si ottengono risultati dalla ricerca -->
-        <h2 v-if="seriesArray != ''" class="pt-5 pb-3">Serie TV</h2>
+        <h2 v-if="seriesArray != ''" class="text-uppercase pt-5 pb-3">
+          Serie TV
+        </h2>
         <AppCard
           v-for="(movie, index) in seriesArray"
           :key="index"

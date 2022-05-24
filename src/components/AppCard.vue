@@ -14,8 +14,9 @@
 
           <img
             v-else
-            :src="`../assets/flags/${movie.original_language}.png`"
-            alt=""
+            class="flag"
+            :src="require(`../assets/flags/${movie.original_language}.png`)"
+            :alt="movie.original_language"
           />
         </h6>
         <h6 class="card-text">Voto: {{ movie.vote_average }}/10</h6>
@@ -43,5 +44,8 @@ export default {
   border: 2px solid red;
   margin-bottom: 1rem;
   background-color: #141414;
+  .flag {
+    height: 1rem;
+  }
 }
 </style>

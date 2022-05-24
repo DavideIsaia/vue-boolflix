@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="container d-flex flex-wrap pt-5 justify-content-center">
+    <div class="container d-flex flex-wrap pt-4 justify-content-center">
       <div class="row">
         <h2>Film</h2>
         <AppCard

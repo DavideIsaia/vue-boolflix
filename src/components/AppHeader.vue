@@ -1,27 +1,17 @@
 <template>
-  <header>
+  <header class="d-flex justify-content-between">
     <div class="logo">BoolFlix</div>
     <div class="search">
       <input
+        v-on:keyup.enter="$emit('searchMovies', cercaFilm)"
         class="btn btn-dark"
         type="text"
         placeholder="Cerca un film"
         v-model="cercaFilm"
       />
-      <button @click="startSearch" class="btn btn-dark">
+      <button @click="$emit('searchMovies', cercaFilm)" class="btn btn-dark">
         <i class="fas fa-search"></i>
       </button>
-    </div>
-    <div
-      class="search-results"
-      v-for="(item, index) in searchMovies"
-      :key="index"
-    >
-      <div>{{ index + 1 }}</div>
-      <h2>{{ item.title }}</h2>
-      <h3>{{ item.original_title }}</h3>
-      <h4>{{ item.original_language }}</h4>
-      <h5>{{ item.vote_average }}</h5>
     </div>
   </header>
 </template>
@@ -39,12 +29,10 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  display: flex;
   background-color: #060606;
-  justify-content: space-between;
 
   .logo {
-    color: red;
+    color: #e50914;
     text-transform: uppercase;
     font-size: 3rem;
     padding: 1rem;

@@ -1,12 +1,13 @@
 <template>
   <header class="d-flex justify-content-between">
-    <div class="logo">BoolFlix</div>
+    <img class="logo" src="../assets/logo.png" />
     <div class="search">
+      <!-- fa partire la ricerca al rilascio del tasto invio o del bottone e passa il risultato tramite $emit al genitore -->
       <input
         v-on:keyup.enter="$emit('searchMovies', cercaFilm)"
         class="btn btn-dark"
         type="text"
-        placeholder="Cerca un film"
+        placeholder="Cerca film/serie e premi Invio"
         v-model="cercaFilm"
       />
       <button @click="$emit('searchMovies', cercaFilm)" class="btn btn-dark">
@@ -29,12 +30,14 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  background-color: #060606;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: linear-gradient(0deg, rgba(6, 6, 6, 0) 0%, rgba(6, 6, 6, 1) 100%);
 
   .logo {
-    color: #e50914;
-    text-transform: uppercase;
-    font-size: 3rem;
     padding: 1rem;
   }
 

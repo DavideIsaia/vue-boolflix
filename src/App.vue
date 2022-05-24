@@ -25,8 +25,12 @@ export default {
   methods: {
     startSearch(cercaFilm) {
       const params = {
+        // chiave personale necessaria per fare le richieste all'API
         api_key: "c65d6e41ee9a7c6cdbdbaa81e45a6849",
+        // campo di ricerca obbligatorio per mostrare i risultati
         query: cercaFilm,
+        // lingua in cui vengono mostrate le locandine e le descrizioni dei film (opzionale)
+        language: "it-IT",
       };
 
       axios

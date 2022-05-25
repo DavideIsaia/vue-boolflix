@@ -8,15 +8,11 @@
         :src="`https://www.themoviedb.org/t/p/w342${movie.poster_path}`"
       />
 
-      <!-- altrimenti mostro un'immagine generica -->
-      <img
-        v-else
-        class="card-img-top"
-        src="https://bitsofco.de/content/images/2018/12/broken-1.png"
-      />
+      <!-- altrimenti mostro il titolo -->
+      <h3 v-else class="card-title mt-2">{{ movie.title || movie.name }}</h3>
 
       <div class="card-body">
-        <h3 class="card-title mt-2">{{ movie.title }} {{ movie.name }}</h3>
+        <h3 class="card-title mt-2">{{ movie.title || movie.name }}</h3>
         <!-- il titolo originale viene mostrato solo se è diverso dal titolo, sia per i film che per le serie -->
         <h5
           v-if="
@@ -25,7 +21,7 @@
           "
           class="card-subtitle text-muted mb-2"
         >
-          Titolo Originale: {{ movie.original_title }} {{ movie.original_name }}
+          Titolo Originale: {{ movie.original_title || movie.original_name }}
         </h5>
         <!-- se la lingua non è inclusa nell'array di bandiere, mostra solo la sigla della lingua -->
         <h6 class="card-text">
@@ -45,19 +41,13 @@
         <h6 class="card-text">
           Voto:
           <span v-if="movie.vote_average == 0">Non Pervenuto</span>
-          <!-- altrimenti si fa un ciclo v-for che aggiunge tante stelle quanto il numero arrotondato che esce dalla funzione starsVote -->
+          <!-- altrimenti si fa un ciclo v-for che tramitre operatore ternario aggiunge la classe delle stelle piene e vuote -->
           <span v-else>
-            <!-- stelle piene -->
             <i
-              v-for="(item, index) in starsVote(movie.vote_average)"
+              v-for="(item, index) in 5"
               :key="index"
-              class="fas fa-star"
-            ></i>
-            <!-- stelle vuote -->
-            <i
-              v-for="(item, index) in starsTotal"
-              :key="index"
-              class="far fa-star"
+              class="fa-star"
+              :class="index < starsVote() ? 'fas' : 'far'"
             ></i>
           </span>
         </h6>
@@ -83,12 +73,8 @@ export default {
   },
   methods: {
     // prende il voto espresso da 1 a 10 e lo divide per 2 e poi arrotonda per eccesso
-    starsVote(vote) {
-      return Math.ceil(vote / 2);
-    },
-    // sottrae da 5 il numero di stelle gialle e mostra le rimanenti
-    starsTotal() {
-      return 5 - this.starsVote();
+    starsVote() {
+      return Math.ceil(this.movie.vote_average / 2);
     },
   },
 };

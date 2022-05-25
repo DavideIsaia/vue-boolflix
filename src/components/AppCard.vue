@@ -61,10 +61,10 @@
               Cast:
               <div
                 class="details__small"
-                v-for="(people, index) in castArray"
+                v-for="(person, index) in castArray"
                 :key="index"
               >
-                {{ people.original_name }}
+                {{ person.original_name }}
               </div>
             </div>
             <div class="mt-2 mb-1">
@@ -119,38 +119,22 @@ export default {
         api_key: "c65d6e41ee9a7c6cdbdbaa81e45a6849",
         language: "it-IT",
       };
-      // faccio un ciclo if else per seprarare film e serie tv e inserisco l'id all'interno del get
-      if (movie.title) {
-        axios
-          .get(`https://api.themoviedb.org/3/movie/${movie.id}/credits`, {
-            params,
-          })
-          .then((resp) => {
-            // prelevo solo i primi 5 risultati tramite splice
-            this.castArray = resp.data.cast.splice(0, 5);
-          });
-        axios
-          .get(`https://api.themoviedb.org/3/movie/${movie.id}`, { params })
-          // prelevo il genere e nella stessa chiamata aggiungo lo switch per mostrare/nascondere i risultati al clic
-          .then((resp) => {
-            this.genresArray = resp.data.genres;
-            this.showDetails = !this.showDetails;
-          });
-      } else {
-        axios
-          .get(`https://api.themoviedb.org/3/tv/${movie.id}/credits`, {
-            params,
-          })
-          .then((resp) => {
-            this.castArray = resp.data.cast.splice(0, 5);
-          });
-        axios
-          .get(`https://api.themoviedb.org/3/tv/${movie.id}`, { params })
-          .then((resp) => {
-            this.genresArray = resp.data.genres;
-            this.showDetails = !this.showDetails;
-          });
-      }
+      // faccio le chiamate axios e aspetto che arrivino le risposte tutte insieme
+      const castRequest = axios.get(
+        `https://api.themoviedb.org/3/movie/${movie.id}/credits`,
+        { params }
+      );
+      const genreRequest = axios.get(
+        `https://api.themoviedb.org/3/movie/${movie.id}`,
+        { params }
+      );
+      // prelevo il genere e nella stessa chiamata aggiungo lo switch per mostrare/nascondere i risultati al clic
+      axios.all([castRequest, genreRequest]).then((resp) => {
+        // prelevo solo i primi 5 risultati tramite splice
+        this.castArray = resp[0].data.cast.splice(0, 5);
+        this.genresArray = resp[1].data.genres;
+        this.showDetails = !this.showDetails;
+      });
     },
   },
 };
@@ -162,7 +146,6 @@ export default {
   background-color: #060606;
   width: 100%;
   height: 100%;
-  cursor: pointer;
 
   .flag {
     height: 1.5rem;
@@ -182,15 +165,20 @@ export default {
     width: 100%;
     height: 100%;
     overflow: hidden;
+
     .info {
-      border: 2px solid red;
+      background-color: rgba(230, 2, 12, 0.9);
       position: relative;
+      height: 2rem;
+      cursor: pointer;
+
       .details {
         position: absolute;
         top: 2.4rem;
-        left: 2.5rem;
+        left: 1.5rem;
         padding: 1rem 3rem;
-        background: rgba(230, 2, 12, 0.9);
+        background-color: rgba(230, 2, 12, 0.9);
+        box-shadow: 3px 3px 10px black;
         &__small {
           font-size: 0.8rem;
         }

@@ -33,17 +33,20 @@ export default {
         language: "it-IT",
       };
 
-      axios
-        .get("https://api.themoviedb.org/3/search/movie", { params })
-        .then((resp) => {
-          this.moviesArray = resp.data.results;
-        });
+      // faccio le chiamate axios e aspetto che arrivino le risposte tutte insieme
+      const moviesRequest = axios.get(
+        "https://api.themoviedb.org/3/search/movie",
+        { params }
+      );
+      const seriesRequest = axios.get(
+        "https://api.themoviedb.org/3/search/tv",
+        { params }
+      );
 
-      axios
-        .get("https://api.themoviedb.org/3/search/tv", { params })
-        .then((resp) => {
-          this.seriesArray = resp.data.results;
-        });
+      axios.all([moviesRequest, seriesRequest]).then((resp) => {
+        this.moviesArray = resp[0].data.results;
+        this.seriesArray = resp[1].data.results;
+      });
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-    <div class="card rounded">
+    <div @mouseleave="showDetails = false" class="card rounded">
       <!-- se la locandina è presente la mostro -->
       <img
         v-if="movie.poster_path !== null"

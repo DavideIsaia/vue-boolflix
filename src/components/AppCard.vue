@@ -51,8 +51,8 @@
             ></i>
           </span>
         </h6>
-        <!-- mostra la descrizione del film -->
-        <small> Trama: {{ movie.overview }} </small>
+        <!-- mostra la descrizione del film, se è presente -->
+        <small v-if="movie.overview"> Trama: {{ movie.overview }} </small>
       </div>
     </div>
   </div>

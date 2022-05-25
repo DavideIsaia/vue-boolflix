@@ -2,7 +2,7 @@
   <main>
     <!-- immagine iniziale prima di effettuare le ricerche -->
     <h1 class="welcome" v-if="moviesArray == '' && seriesArray == ''">
-      BENVENUTO! INIZIA LA RICERCA
+      Inizia la ricerca di film e serie tv!
     </h1>
     <div class="container d-flex flex-wrap pt-4 justify-content-center">
       <div class="row">
@@ -62,6 +62,7 @@ main {
     left: 0;
     text-align: center;
     padding-top: 18rem;
+    text-transform: uppercase;
   }
 }
 </style>

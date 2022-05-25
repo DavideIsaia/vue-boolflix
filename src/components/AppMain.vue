@@ -1,9 +1,10 @@
 <template>
   <main>
+    <!-- immagine iniziale prima di effettuare le ricerche -->
+    <h1 class="welcome" v-if="moviesArray == '' && seriesArray == ''">
+      BENVENUTO! INIZIA LA RICERCA
+    </h1>
     <div class="container d-flex flex-wrap pt-4 justify-content-center">
-      <h1 v-if="moviesArray == '' && seriesArray == ''" class="row">
-        BENVENUTO! INIZIA LA RICERCA
-      </h1>
       <div class="row">
         <!-- non mostra il nome della categoria se non si ottengono risultati dalla ricerca -->
         <h2 v-if="moviesArray != ''" class="text-uppercase pb-3">Film</h2>
@@ -50,5 +51,17 @@ main {
   background-color: #141414;
   font-family: sans-serif;
   color: white;
+  .welcome {
+    width: 100%;
+    height: 100vh;
+    background-image: url(../assets/wallpaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding-top: 18rem;
+  }
 }
 </style>

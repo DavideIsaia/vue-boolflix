@@ -51,20 +51,56 @@
             ></i>
           </span>
         </h6>
+        <!-- mostra le informazioni extra -->
+        <div class="info rounded" @click="castAndGenres(movie)">
+          <h6 class="text-uppercase text-center pt-2">
+            Clicca qui per maggiori info
+          </h6>
+          <div class="details rounded" v-if="showDetails">
+            <div class="mt-2 mb-1">
+              Cast:
+              <div
+                class="details__small"
+                v-for="(people, index) in castArray"
+                :key="index"
+              >
+                {{ people.original_name }}
+              </div>
+            </div>
+            <div class="mt-2 mb-1">
+              Genere:
+              <div
+                class="details__small"
+                v-for="(genre, index) in genresArray"
+                :key="index"
+              >
+                {{ genre.name }}
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- mostra la descrizione del film, se è presente -->
-        <small v-if="movie.overview"> Trama: {{ movie.overview }} </small>
+        <h6 v-if="movie.overview">
+          Trama: <small>{{ movie.overview }}</small>
+        </h6>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "AppCard",
   data() {
     return {
       // array con le bandierine delle lingue più popolari
       langFlags: ["cn", "de", "en", "es", "fr", "it", "ja", "ru", "pt"],
+      // array per cast e generi
+      castArray: [],
+      genresArray: [],
+      showDetails: false,
     };
   },
   // prelevo l'oggetto dal genitore
@@ -75,6 +111,46 @@ export default {
     // prende il voto espresso da 1 a 10 e lo divide per 2 e poi arrotonda per eccesso
     starsVote() {
       return Math.ceil(this.movie.vote_average / 2);
+    },
+
+    // metto la chiamata axios direttamente dentro questo componenete in quanto è indipendente dalla query che viene cercata nell'header
+    castAndGenres(movie) {
+      const params = {
+        api_key: "c65d6e41ee9a7c6cdbdbaa81e45a6849",
+        language: "it-IT",
+      };
+      // faccio un ciclo if else per seprarare film e serie tv e inserisco l'id all'interno del get
+      if (movie.title) {
+        axios
+          .get(`https://api.themoviedb.org/3/movie/${movie.id}/credits`, {
+            params,
+          })
+          .then((resp) => {
+            // prelevo solo i primi 5 risultati tramite splice
+            this.castArray = resp.data.cast.splice(0, 5);
+          });
+        axios
+          .get(`https://api.themoviedb.org/3/movie/${movie.id}`, { params })
+          // prelevo il genere e nella stessa chiamata aggiungo lo switch per mostrare/nascondere i risultati al clic
+          .then((resp) => {
+            this.genresArray = resp.data.genres;
+            this.showDetails = !this.showDetails;
+          });
+      } else {
+        axios
+          .get(`https://api.themoviedb.org/3/tv/${movie.id}/credits`, {
+            params,
+          })
+          .then((resp) => {
+            this.castArray = resp.data.cast.splice(0, 5);
+          });
+        axios
+          .get(`https://api.themoviedb.org/3/tv/${movie.id}`, { params })
+          .then((resp) => {
+            this.genresArray = resp.data.genres;
+            this.showDetails = !this.showDetails;
+          });
+      }
     },
   },
 };
@@ -106,6 +182,20 @@ export default {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    .info {
+      border: 2px solid red;
+      position: relative;
+      .details {
+        position: absolute;
+        top: 2.4rem;
+        left: 2.5rem;
+        padding: 1rem 3rem;
+        background: rgba(230, 2, 12, 0.9);
+        &__small {
+          font-size: 0.8rem;
+        }
+      }
+    }
   }
 
   &:hover .card-body {

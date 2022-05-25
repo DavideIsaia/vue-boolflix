@@ -1,9 +1,9 @@
 <template>
   <main>
     <!-- immagine iniziale prima di effettuare le ricerche -->
-    <h1 class="welcome" v-if="moviesArray == '' && seriesArray == ''">
-      Inizia la ricerca di film e serie tv!
-    </h1>
+    <div class="welcome" v-if="moviesArray == '' && seriesArray == ''">
+      <h1>Inizia la ricerca di film e serie tv!</h1>
+    </div>
     <div class="container d-flex flex-wrap pt-4 justify-content-center">
       <div class="row">
         <!-- non mostra il nome della categoria se non si ottengono risultati dalla ricerca -->
@@ -60,9 +60,12 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    text-align: center;
     padding-top: 18rem;
-    text-transform: uppercase;
+    h1 {
+      text-transform: uppercase;
+      text-align: center;
+      transform: rotate(9deg);
+    }
   }
 }
 </style>

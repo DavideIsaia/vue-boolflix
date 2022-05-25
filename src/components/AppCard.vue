@@ -169,7 +169,7 @@ export default {
     .info {
       background-color: rgba(230, 2, 12, 0.9);
       position: relative;
-      height: 2rem;
+      padding: 0.1rem 0.3rem;
       cursor: pointer;
 
       .details {

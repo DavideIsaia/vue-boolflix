@@ -10,7 +10,10 @@
         placeholder="Cerca film/serie e premi Invio"
         v-model="cercaFilm"
       />
-      <button @click="$emit('searchMovies', cercaFilm)" class="btn btn-dark">
+      <button
+        @click="$emit('searchMovies', cercaFilm)"
+        class="btn btn-dark d-none d-md-inline-block"
+      >
         <i class="fas fa-search"></i>
       </button>
     </div>

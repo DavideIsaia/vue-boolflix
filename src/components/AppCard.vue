@@ -170,6 +170,7 @@ export default {
       background-color: rgba(230, 2, 12, 0.9);
       position: relative;
       padding: 0.1rem 0.3rem;
+      user-select: none;
       cursor: pointer;
 
       .details {

@@ -8,8 +8,8 @@
         :src="`https://www.themoviedb.org/t/p/w342${movie.poster_path}`"
       />
 
-      <!-- altrimenti mostro il titolo -->
-      <h3 v-else class="card-title mt-2">{{ movie.title || movie.name }}</h3>
+      <!-- altrimenti mostro un'img generica -->
+      <img v-else src="../assets/no-image.png" alt="" />
 
       <div class="card-body">
         <h3 class="card-title mt-2">{{ movie.title || movie.name }}</h3>
@@ -147,6 +147,10 @@ export default {
   width: 100%;
   height: 100%;
 
+  img {
+    margin: auto;
+  }
+
   .flag {
     height: 1.5rem;
   }
@@ -167,7 +171,7 @@ export default {
     overflow: hidden;
 
     .info {
-      background-color: rgba(230, 2, 12, 0.9);
+      background-color: #e50914;
       position: relative;
       padding: 0.1rem 0.3rem;
       user-select: none;
@@ -178,7 +182,7 @@ export default {
         top: 2.4rem;
         left: 1.5rem;
         padding: 1rem 3rem;
-        background-color: rgba(230, 2, 12, 0.9);
+        background-color: rgba(229, 9, 20, 0.9);
         box-shadow: 3px 3px 10px black;
         &__small {
           font-size: 0.8rem;

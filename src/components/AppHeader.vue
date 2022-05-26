@@ -1,6 +1,6 @@
 <template>
   <header class="d-flex justify-content-between">
-    <img class="logo" src="../assets/logo.png" />
+    <img class="logo d-none d-lg-inline-block" src="../assets/logo.png" />
     <div class="search">
       <!-- aggiungo un select per scegliere un genere per filtrare film e serie tv -->
       <select

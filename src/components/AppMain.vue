@@ -60,11 +60,11 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    padding-top: 18rem;
     h1 {
       text-transform: uppercase;
       text-align: center;
-      transform: rotate(9deg);
+      vertical-align: middle;
+      line-height: 100vh;
     }
   }
 }

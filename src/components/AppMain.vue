@@ -4,7 +4,7 @@
     <div class="welcome" v-if="moviesArray == '' && seriesArray == ''">
       <h1>Inizia la ricerca di film e serie tv!</h1>
     </div>
-    <div class="container d-flex flex-wrap pt-4 justify-content-center">
+    <div class="container-fluid d-flex flex-wrap pt-4 justify-content-center">
       <div class="row">
         <!-- non mostra il nome della categoria se non si ottengono risultati dalla ricerca -->
         <h2 v-if="moviesArray != ''" class="text-uppercase pb-3">Film</h2>
@@ -66,6 +66,10 @@ main {
       vertical-align: middle;
       line-height: 100vh;
     }
+  }
+
+  .container-fluid {
+    width: 90%;
   }
 }
 </style>

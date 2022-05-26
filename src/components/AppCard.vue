@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+  <div class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4">
     <div @mouseleave="showDetails = false" class="card rounded">
       <!-- se la locandina è presente la mostro -->
       <img
@@ -52,7 +52,7 @@
           </span>
         </h6>
         <!-- mostra le informazioni extra -->
-        <div class="info rounded" @click="castAndGenres(movie)">
+        <div class="info mb-1 rounded" @click="castAndGenres(movie)">
           <h6 class="text-uppercase text-center pt-2">
             Clicca qui per maggiori info
           </h6>

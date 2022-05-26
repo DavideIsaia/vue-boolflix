@@ -21,16 +21,14 @@
       </select>
       <!-- fa partire la ricerca al rilascio del tasto invio o del bottone e passa il risultato tramite $emit al genitore -->
       <input
-        v-on:keyup.enter="
-          $emit('searchMovies', cercaFilm), (selectedGenre = '')
-        "
+        v-on:keyup.enter="sendSearchEvent(), (selectedGenre = '')"
         class="btn btn-dark"
         type="text"
         placeholder="Cerca film/serie e premi Invio"
         v-model="cercaFilm"
       />
       <button
-        @click="$emit('searchMovies', cercaFilm), (selectedGenre = '')"
+        @click="sendSearchEvent(), (selectedGenre = '')"
         class="btn btn-dark d-none d-md-inline-block"
       >
         <i class="fas fa-search"></i>
@@ -50,6 +48,14 @@ export default {
       cercaFilm: "",
       selectedGenre: "",
     };
+  },
+  methods: {
+    // evita di mandare richieste vuote ad axios
+    sendSearchEvent() {
+      if (this.cercaFilm.trim()) {
+        this.$emit("searchMovies", this.cercaFilm);
+      }
+    },
   },
 };
 </script>

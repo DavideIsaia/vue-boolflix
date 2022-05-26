@@ -25,8 +25,8 @@ export default {
       moviesArray: [],
       seriesArray: [],
       genresArray: [],
-      mainMovies: [],
-      mainSeries: [],
+      genreFilterMovies: [],
+      genreFilterSeries: [],
     };
   },
   methods: {
@@ -66,8 +66,12 @@ export default {
           seriesGenresRequest,
         ])
         .then((resp) => {
-          this.moviesArray = resp[0].data.results;
-          this.seriesArray = resp[1].data.results;
+          // come risposta axios, passo l'array filtrato per genere
+          this.genreFilterMovies = resp[0].data.results;
+          // se non sono stati selezionati generi, passo normalmente l'array completo
+          this.moviesArray = this.genreFilterMovies;
+          this.genreFilterSeries = resp[1].data.results;
+          this.seriesArray = this.genreFilterSeries;
           // per adesso svolgo i vari passaggi dentro il then, mettendo in un array i generi dei film
           const moviesGenresArray = resp[2].data.genres;
           const movieGenresId = function () {
@@ -88,6 +92,39 @@ export default {
           // risultato finale
           this.genresArray = moviesGenresArray.concat(filteredSeriesGenres);
         });
+    },
+
+    // filtro i generi presenti dentro ogni elemento della ricerca e se il genere combacia con quello della option del select, allora lo mostro
+    filterContents(searchId) {
+      if (searchId !== "") {
+        this.moviesArray = this.genreFilterMovies.filter((element) => {
+          // se l'array degli id di genere contiene elementi, allora ciclo for per vedere se qualcuno combacia con quello cercato
+          if (element.genre_ids.length > 0) {
+            for (let i = 0; i < element.genre_ids.length; i++) {
+              if (element.genre_ids[i] == searchId) {
+                return true;
+              }
+            }
+          }
+        });
+        // altrimenti mostro gli elementi normalmente
+      } else {
+        this.moviesArray = this.genreFilterMovies;
+      }
+      // ripeto la stessa cosa per le serie tv
+      if (searchId !== "") {
+        this.seriesArray = this.genreFilterSeries.filter((element) => {
+          if (element.genre_ids.length > 0) {
+            for (let i = 0; i < element.genre_ids.length; i++) {
+              if (element.genre_ids[i] == searchId) {
+                return true;
+              }
+            }
+          }
+        });
+      } else {
+        this.seriesArray = this.genreFilterSeries;
+      }
     },
   },
 };

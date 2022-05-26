@@ -5,7 +5,11 @@
       @getSelectedGenre="filterContents"
       :genresArray="genresArray"
     />
-    <AppMain :moviesArray="moviesArray" :seriesArray="seriesArray" />
+    <AppMain
+      v-if="loadingEnd"
+      :moviesArray="moviesArray"
+      :seriesArray="seriesArray"
+    />
   </div>
 </template>
 
@@ -27,6 +31,7 @@ export default {
       genresArray: [],
       genreFilterMovies: [],
       genreFilterSeries: [],
+      loadingEnd: true, // la imposto a true così mostra la schermata iniziale
     };
   },
   methods: {
@@ -66,12 +71,15 @@ export default {
           seriesGenresRequest,
         ])
         .then((resp) => {
+          this.loadingEnd = false; // all'inizio della chiamata axios la imposto a false così non mostra nulla fino alla fine delle chiamate
           // come risposta axios, passo l'array filtrato per genere
           this.genreFilterMovies = resp[0].data.results;
           // se non sono stati selezionati generi, passo normalmente l'array completo
           this.moviesArray = this.genreFilterMovies;
           this.genreFilterSeries = resp[1].data.results;
           this.seriesArray = this.genreFilterSeries;
+          // aggiunto una riga per mostrare il tutto dopo il caricamento
+          this.loadingEnd = true;
           // per adesso svolgo i vari passaggi dentro il then, mettendo in un array i generi dei film
           const moviesGenresArray = resp[2].data.genres;
           const movieGenresId = function () {
